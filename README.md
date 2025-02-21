@@ -1,16 +1,17 @@
-# Blend audit details
-- Total Prize Pool: $105000 in USDC
-  - HM awards: $67800 in USDC
-  - (remove this line if there is no Analysis pool) Analysis awards: XXX XXX USDC (Notion: Analysis pool)
-  - QA awards: $2800 in USDC
-  - (remove this line if there is no Bot race) Bot Race awards: XXX XXX USDC (Notion: Bot Race pool)
-  - Judge awards: $8300 in USDC
-  - Validator awards: XXX XXX USDC (Notion: Triage fee - final)
+# Blend V2 Audit + Certora Formal Verification details
+- Total Audit Prize Pool: $125,000 in USDC
+  - HM awards: $73,500 in USDC
+  - QA awards: $2,800 in USDC
+  - Judge awards: $5,000 in USDC
+  - Validator awards: $3,200 in USDC 
   - Scout awards: $500 in USDC
-  - (this line can be removed if there is no mitigation) Mitigation Review: XXX XXX USDC
+  - Mitigation Review: $20,000 in USDC
+  - Formal Verification: $20,000 in USDC
 - [Read our guidelines for more details](https://docs.code4rena.com/roles/wardens)
 - Starts February 24, 2025 20:00 UTC
 - Ends March 17, 2025 20:00 UTC
+
+This audit includes **deployed code,** and [the "live criticals" exception](https://docs.code4rena.com/awarding/incentive-model-and-awards#the-live-criticals-exception) therefore applies. 
 
 **Note re: risk level upgrades/downgrades**
 
@@ -24,10 +25,7 @@ As such, wardens are encouraged to select the appropriate risk level carefully d
 
 The 4naly3er report can be found [here](https://github.com/code-423n4/2025-02-blend/blob/main/4naly3er-report.md).
 
-
-
 _Note for C4 wardens: Anything included in this `Automated Findings / Publicly Known Issues` section is considered a publicly known issue and is ineligible for awards._
-## 🐺 C4 team: paste this into the bottom of the sponsor's audit repo `README`, then delete this line
 
 Any uncovered issues will be logged here: https://github.com/blend-capital/blend-contracts-v2/issues
 
@@ -36,6 +34,8 @@ Any uncovered issues will be logged here: https://github.com/blend-capital/blend
 # Overview
 
 [ ⭐️ SPONSORS: add info here ]
+
+- See the [Formal Verification Readme]() for FV details.  [C4 TODO]
 
 ## Links
 
