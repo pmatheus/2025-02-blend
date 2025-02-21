@@ -11,7 +11,7 @@
 - Starts February 24, 2025 20:00 UTC
 - Ends March 17, 2025 20:00 UTC
 
-This audit includes **deployed code,** and [the "live criticals" exception](https://docs.code4rena.com/awarding/incentive-model-and-awards#the-live-criticals-exception) therefore applies. 
+ℹ️ This audit includes **deployed code,** and [the "live criticals" exception](https://docs.code4rena.com/awarding/incentive-model-and-awards#the-live-criticals-exception) therefore applies. 
 
 **Note re: risk level upgrades/downgrades**
 
