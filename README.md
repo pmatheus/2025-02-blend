@@ -39,22 +39,32 @@ The 4naly3er report can be found [here](https://github.com/code-423n4/2025-02-bl
 
 _Note for C4 wardens: Anything included in this `Automated Findings / Publicly Known Issues` section is considered a publicly known issue and is ineligible for awards._
 
-Any uncovered issues will be logged here: https://github.com/blend-capital/blend-contracts-v2/issues
+Any issues that have already been uncovered here at the start of the contest are considered out-of-scope: https://github.com/blend-capital/blend-contracts-v2/issues
 
-✅ SCOUTS: Please format the response above 👆 so its not a wall of text and its readable.
+The following issues have been uncovered by the Blend team via dedicated issues in their [GitHub page](https://github.com/blend-capital/blend-contracts-v2/issues) and should thus be considered out-of-scope:
+
+- [#18](https://github.com/blend-capital/blend-contracts-v2/issues/18) u64 Optimization
+  - The Blend team did not notice any optimizations arising from the type adjustments
+- [#11](https://github.com/blend-capital/blend-contracts-v2/issues/11) Remove "spender" and "to" from "submit"
+  - The Blend team decided to not implement the relevant `interface` changes as they believe the current approach is more readable and the flash-loan implementation that relied on this change was implemented in a different way
+- [#4](https://github.com/blend-capital/blend-contracts-v2/issues/4) Simplify redundent token transfers
+  - The issue of redundant token transfers is known and its implementation was considered too complex to implement at this stage
+
+Additionally, the issue outlined below contains a lot of interesting technical information around flash-loans as well as possible known risks considered:
+
+- [#7](https://github.com/blend-capital/blend-contracts-v2/issues/7) Add flash loans 
 
 # Overview
 
-[ ⭐️ SPONSORS: add info here ]
+The `blend-contracts-v2` subfolder contains the smart contacts for an implementation of the Blend Protocol. Blend is a universal liquidity protocol primitive that enables the permissionless creation of lending pools.
+
+The `fee-vault` subfolder represents the fee vault for Blend pools. It is used to allow an admin to collect a portion of the interest earned from blend pools by the vault depositors along with all emissions accrued by vault depositors. Wallets and integrating protocols are the entities typically interested in this functionality.
 
 - See the [Formal Verification Readme]() for FV details.  [C4 TODO]
 
 ## Links
 
-- **Previous audits:**  https://github.com/blend-capital/blend-contracts/tree/main/audits for v1 audits.
-
-v2 audit is in progress, no report to share at this time
-  - ✅ SCOUTS: If there are multiple report links, please format them in a list.
+- **Previous audits:**  https://github.com/blend-capital/blend-contracts/tree/main/audits (V1 Audits)
 - **Documentation:** https://docs.blend.capital/
 - **Website:** https://www.blend.capital/
 - **X/Twitter:** https://x.com/blend_capital
@@ -64,60 +74,90 @@ v2 audit is in progress, no report to share at this time
 
 # Scope
 
-[ ✅ SCOUTS: add scoping and technical details here ]
+The implementations in-scope of the contest may contain unit tests defined within the code of the implementation itself. Those unit tests are clearly annotated via `#[cfg(test)]`, `#[test]`, or any other similar language-supported syntax and are considered out-of-scope for the purposes of the contest.
 
 ### Files in scope
-- ✅ This should be completed using the `metrics.md` file
-- ✅ Last row of the table should be Total: SLOC
-- ✅ SCOUTS: Have the sponsor review and and confirm in text the details in the section titled "Scoping Q amp; A"
 
-*For sponsors that don't use the scoping tool: list all files in scope in the table below (along with hyperlinks) -- and feel free to add notes to emphasize areas of focus.*
-
-| Contract | SLOC | Purpose | Libraries used |  
-| ----------- | ----------- | ----------- | ----------- |
-| [contracts/folder/sample.sol](https://github.com/code-423n4/repo-name/blob/contracts/folder/sample.sol) | 123 | This contract does XYZ | [`@openzeppelin/*`](https://openzeppelin.com/contracts/) |
+| Files | Interfaces | nSLOC |  Libraries used |
+| -------- | -------- | -------- |   -------- |
+|fee-vault/src/constants.rs | **** | 3 |N/A| 
+|fee-vault/src/contract.rs | **** | 147 | N/A | 
+|fee-vault/src/errors.rs | **** | 15 | N/A | 
+|fee-vault/src/events.rs | **** | 65 | N/A | 
+|fee-vault/src/lib.rs | **** | 16 | N/A | 
+|fee-vault/src/pool.rs | **** | 42 | N/A | 
+|fee-vault/src/reserve_vault.rs | **** | 1178 | N/A | 
+|fee-vault/src/storage.rs | **** | 150 | N/A | 
+|fee-vault/src/validator.rs | **** | 12 | | N/A
+|blend-contracts-v2/backstop/src/backstop/deposit.rs | **** | 203 | N/A | 
+|blend-contracts-v2/backstop/src/backstop/fund_management.rs | **** | 225 | N/A | 
+|blend-contracts-v2/backstop/src/backstop/mod.rs | **** | 13 | N/A | 
+|blend-contracts-v2/backstop/src/backstop/pool.rs | **** | 450 | N/A | 
+|blend-contracts-v2/backstop/src/backstop/user.rs | **** | 636 | N/A | 
+|blend-contracts-v2/backstop/src/backstop/withdrawal.rs | **** | 403 | N/A | 
+|blend-contracts-v2/backstop/src/constants.rs | **** | 6 | N/A | 
+|blend-contracts-v2/backstop/src/contract.rs | **** | 150 | N/A | 
+|blend-contracts-v2/backstop/src/dependencies/comet.rs | **** | 2 | N/A | 
+|blend-contracts-v2/backstop/src/dependencies/mod.rs | **** | 7 | N/A | 
+|blend-contracts-v2/backstop/src/dependencies/pool_factory.rs | **** | 2 | N/A | 
+|blend-contracts-v2/backstop/src/emissions/claim.rs |  **** | 539 | N/A | 
+|blend-contracts-v2/backstop/src/emissions/distributor.rs | **** | 608 | N/A | 
+|blend-contracts-v2/backstop/src/emissions/manager.rs | **** | 2137 | N/A | 
+|blend-contracts-v2/backstop/src/emissions/mod.rs | **** | 8 | N/A | 
+|blend-contracts-v2/backstop/src/errors.rs | **** | 23 | N/A | 
+|blend-contracts-v2/backstop/src/events.rs | **** | 67 | N/A | 
+|blend-contracts-v2/backstop/src/lib.rs | **** | 16 | N/A | 
+|blend-contracts-v2/backstop/src/storage.rs | **** | 349 | N/A | 
+|blend-contracts-v2/pool-factory/src/errors.rs | **** | 9 | N/A | 
+|blend-contracts-v2/pool-factory/src/events.rs | **** | 8 | N/A | 
+|blend-contracts-v2/pool-factory/src/lib.rs | **** | 11 | N/A | 
+|blend-contracts-v2/pool-factory/src/pool_factory.rs | **** | 83 | N/A | 
+|blend-contracts-v2/pool-factory/src/storage.rs | **** | 58 | N/A | 
+|blend-contracts-v2/pool/src/auctions/auction.rs | **** | 1771 | N/A | 
+|blend-contracts-v2/pool/src/auctions/backstop_interest_auction.rs | **** | 1296 | N/A | 
+|blend-contracts-v2/pool/src/auctions/bad_debt_auction.rs | **** | 2018 | N/A | 
+|blend-contracts-v2/pool/src/auctions/mod.rs | **** | 5 | N/A | 
+|blend-contracts-v2/pool/src/auctions/user_liquidation_auction.rs | **** | 2587 | N/A | 
+|blend-contracts-v2/pool/src/constants.rs | **** | 5 | N/A |  
+|blend-contracts-v2/pool/src/contract.rs | **** | 254 | N/A | 
+|blend-contracts-v2/pool/src/dependencies/backstop.rs | **** | 2 | N/A | 
+|blend-contracts-v2/pool/src/dependencies/mod.rs | **** | 2 | N/A | 
+|blend-contracts-v2/pool/src/emissions/distributor.rs | **** | 1404 | N/A | 
+|blend-contracts-v2/pool/src/emissions/manager.rs | **** | 530 | N/A | 
+|blend-contracts-v2/pool/src/emissions/mod.rs | **** | 4 | N/A |  
+|blend-contracts-v2/pool/src/errors.rs | **** | 37 | N/A | 
+|blend-contracts-v2/pool/src/events.rs | **** | 144 | N/A | 
+|blend-contracts-v2/pool/src/lib.rs | **** | 25 | N/A | 
+|blend-contracts-v2/pool/src/pool/actions.rs | **** | 1718 | N/A |  
+|blend-contracts-v2/pool/src/pool/bad_debt.rs | **** | 234 | N/A | 
+|blend-contracts-v2/pool/src/pool/config.rs | **** | 1066 | N/A |  
+|blend-contracts-v2/pool/src/pool/gulp.rs | **** | 213 |N/A |
+|blend-contracts-v2/pool/src/pool/health_factor.rs | **** | 287 | N/A | 
+|blend-contracts-v2/pool/src/pool/interest.rs | **** | 350 | N/A | 
+|blend-contracts-v2/pool/src/pool/mod.rs | **** | 27 | N/A | 
+|blend-contracts-v2/pool/src/pool/pool.rs | **** | 680 | N/A | 
+|blend-contracts-v2/pool/src/pool/reserve.rs | **** | 589 | N/A | 
+|blend-contracts-v2/pool/src/pool/status.rs | **** | 956 | N/A | 
+|blend-contracts-v2/pool/src/pool/submit.rs | **** | 1863 | N/A | 
+|blend-contracts-v2/pool/src/pool/user.rs | **** | 1004 | N/A | 
+|blend-contracts-v2/pool/src/storage.rs | **** | 380 | N/A | 
+|blend-contracts-v2/pool/src/validator.rs | **** | 7 | N/A | 
+|Totals|  | 27099 |  | 
 
 ### Files out of scope
-✅ SCOUTS: List files/directories out of scope
+
+Any file that is not explicitly included in the aforementioned list is to be considered out-of-scope.
 
 ## Scoping Q &amp; A
 
-### General questions
-### Are there any ERC20's in scope?: Yes
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-Any (all possible ERC20s)
-
-
-### Are there any ERC777's in scope?: No
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-
-
-### Are there any ERC721's in scope?: No
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-
-
-### Are there any ERC1155's in scope?: No
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-
-
-✅ SCOUTS: Once done populating the table below, please remove all the Q/A data above.
-
 | Question                                | Answer                       |
 | --------------------------------------- | ---------------------------- |
-| ERC20 used by the protocol              |       🖊️             |
-| Test coverage                           | ✅ SCOUTS: Please populate this after running the test coverage command                          |
-| ERC721 used  by the protocol            |            🖊️              |
-| ERC777 used by the protocol             |           🖊️                |
-| ERC1155 used by the protocol            |              🖊️            |
-| Chains the protocol will be deployed on | OtherStellar  |
+| ERC20 used by the protocol              |       Any (all possible ERC20s)             |
+| Test coverage                           | N/A                          |
+| ERC721 used  by the protocol            |            N/A              |
+| ERC777 used by the protocol             |           N/A                |
+| ERC1155 used by the protocol            |              N/A           |
+| Chains the protocol will be deployed on | Stellar Network  |
 
 ### ERC20 token behaviors in scope
 
@@ -152,15 +192,8 @@ Any (all possible ERC20s)
 
 
 ### EIP compliance checklist
+
 N/A
-
-✅ SCOUTS: Please format the response above 👆 using the template below👇
-
-| Question                                | Answer                       |
-| --------------------------------------- | ---------------------------- |
-| src/Token.sol                           | ERC20, ERC721                |
-| src/NFT.sol                             | ERC721                       |
-
 
 # Additional context
 
@@ -168,139 +201,56 @@ N/A
 
 * User's cannot extract funds (borrow, withdraw) from a pool if they do not meet or exceed the minimum health factor
 
-✅ SCOUTS: Please format the response above 👆 so its not a wall of text and its readable.
-
 ## Attack ideas (where to focus for bugs)
-## Auctions
+
+### Auctions
 
 The protocol conducts auctions to both process liquidations and pay out backstop interest. Anything that can disrupt / block / break the creation or filling of these auctions has potential to impact the health of a pool and/or it's backstop.
 
 The auction creation system was modified in v2 to allow auction creators to specify the assets in the bid/lot. https://github.com/blend-capital/blend-contracts-v2/issues/3
 
-## Flash Loans
+### Flash Loans
 
 Blend v2 introduces a flash loans endpoint. These are slightly different than EVM based flash loans, but still allow external contracts to be invoked. with borrowed funds, and repaid afterwards, or remain borrowed with the appropriate amount of collateral.
 
-✅ SCOUTS: Please format the response above 👆 so its not a wall of text and its readable.
-
 ## All trusted roles in the protocol
-
-Pool
-* admin - can add reserves, edit reserve configs, and edit pool config (EXCL. ORACLE)
-
-Backstop
-* N/A
-
-Emitter
-* N/A
-
-Pool Factory
-* N/A
-
-✅ SCOUTS: Please format the response above 👆 using the template below👇
 
 | Role                                | Description                       |
 | --------------------------------------- | ---------------------------- |
-| Owner                          | Has superpowers                |
-| Administrator                             | Can change fees                       |
+| Admin                          | Able to add reserves and edit reserve/pool configurations (excluding oracle) |
 
 ## Describe any novel or unique curve logic or mathematical models implemented in the contracts:
 
-* Interest uses a capped integral controller to adjust the interest rates to help utilization reach the target utilization rate: https://docs.blend.capital/blend-whitepaper#interest-rates
-
-
-
-✅ SCOUTS: Please format the response above 👆 so its not a wall of text and its readable.
+Interest uses a capped integral controller to adjust the interest rates to help utilization reach the target utilization rate: https://docs.blend.capital/blend-whitepaper#interest-rates
 
 ## Running tests
 
-1. Setup Soroban: https://developers.stellar.org/docs/build/smart-contracts/getting-started/setup
-2. Checkout: https://github.com/blend-capital/blend-contracts-v2
-3. Run `make` to install cargo dependencies and build contracts
-4. Run `make test` to execute test suite
+**Building**
 
-✅ SCOUTS: Please format the response above 👆 using the template below👇
+[Soroban Setup](https://developers.stellar.org/docs/build/smart-contracts/getting-started/setup) Prerequisites
 
-```bash
-git clone https://github.com/code-423n4/2023-08-arbitrum
-git submodule update --init --recursive
-cd governance
-foundryup
-make install
-make build
-make sc-election-test
-```
-To run code coverage
-```bash
-make coverage
-```
-To run gas benchmarks
-```bash
-make gas
+```bash 
+# configure relevant rust target 
+rustup target add wasm32-unknown-unknown
+
+# install stellar cli
+cargo install --locked stellar-cli@22.2.0 --features opt
 ```
 
-✅ SCOUTS: Add a screenshot of your terminal showing the gas report
-✅ SCOUTS: Add a screenshot of your terminal showing the test coverage
+To compile project (in either folder)
+
+```bash 
+make
+```
+
+To run tests (in either folder)
+
+```bash 
+make test
+```
 
 ## Miscellaneous
+
 Employees of Blend and employees' family members are ineligible to participate in this audit.
 
 Code4rena's rules cannot be overridden by the contents of this README. In case of doubt, please check with C4 staff.
-
-
-
-
-
-# Scope
-
-*See [scope.txt](https://github.com/code-423n4/2025-02-blend/blob/main/scope.txt)*
-
-### Files in scope
-
-
-| File   | Logic Contracts | Interfaces | nSLOC | Purpose | Libraries used |
-| ------ | --------------- | ---------- | ----- | -----   | ------------ |
-| /backstop/src/lib.rs | ****| **** | 16 | ||
-| /backstop/src/testutils.rs | ****| **** | 183 | ||
-| /mocks/mock-pool-factory/src/lib.rs | ****| **** | 9 | ||
-| /mocks/moderc3156/src/lib.rs | ****| **** | 15 | ||
-| /pool-factory/src/lib.rs | ****| **** | 11 | ||
-| /pool-factory/src/test.rs | ****| **** | 282 | ||
-| /pool/src/lib.rs | ****| **** | 25 | ||
-| /pool/src/testutils.rs | ****| **** | 231 | ||
-| **Totals** | **** | **** | **772** | | |
-
-### Files out of scope
-
-*See [out_of_scope.txt](https://github.com/code-423n4/2025-02-blend/blob/main/out_of_scope.txt)*
-
-| File         |
-| ------------ |
-| ./test-suites/fuzz/fuzz_targets/fuzz_pool_general.rs |
-| ./test-suites/fuzz/lib.rs |
-| ./test-suites/src/assertions.rs |
-| ./test-suites/src/backstop.rs |
-| ./test-suites/src/emitter.rs |
-| ./test-suites/src/lib.rs |
-| ./test-suites/src/liquidity_pool.rs |
-| ./test-suites/src/moderc3156.rs |
-| ./test-suites/src/oracle.rs |
-| ./test-suites/src/pool.rs |
-| ./test-suites/src/pool_factory.rs |
-| ./test-suites/src/setup.rs |
-| ./test-suites/src/snapshot.rs |
-| ./test-suites/src/test_fixture.rs |
-| ./test-suites/src/token.rs |
-| ./test-suites/tests/test_backstop.rs |
-| ./test-suites/tests/test_backstop_inflation_attack.rs |
-| ./test-suites/tests/test_backstop_rz_changes.rs |
-| ./test-suites/tests/test_backstop_swap.rs |
-| ./test-suites/tests/test_flashloan.rs |
-| ./test-suites/tests/test_liquidation.rs |
-| ./test-suites/tests/test_overflow_flag.rs |
-| ./test-suites/tests/test_pool.rs |
-| ./test-suites/tests/test_pool_inflation_attack.rs |
-| ./test-suites/tests/test_pool_interest.rs |
-| ./test-suites/tests/test_wasm_happy_path.rs |
-| Totals: 26 |
-
