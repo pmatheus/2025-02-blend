@@ -6,13 +6,15 @@
   - Validator awards: $3,200 in USDC 
   - Scout awards: $500 in USDC
   - Mitigation Review: $20,000 in USDC
-  - Formal Verification: $20,000 in USDC
+  - Formal Verification: up to $20,000 in USDC
     - Real Bug Rules: $4,000 in USDC
     - Coverage Rules: $14,000 in USDC
     - Participation Rules: $2,000 in USDC
 - [Read our guidelines for more details](https://docs.code4rena.com/roles/wardens)
 - Starts February 24, 2025 20:00 UTC
 - Ends March 17, 2025 20:00 UTC
+
+**Formal Verification pool is conditional:** If no valid rules are submitted, the Formal Verification awards will be added to the HM award pool. 
 
 ℹ️ This audit includes **deployed code,** and [the "live criticals" exception](https://docs.code4rena.com/awarding/incentive-model-and-awards#the-live-criticals-exception) therefore applies. Please see the section titled "Live/Deployed Code" for details.
 
@@ -58,7 +60,7 @@ The `blend-contracts-v2` subfolder contains the smart contacts for an implementa
 
 The `fee-vault` subfolder represents the fee vault for Blend pools. It is used to allow an admin to collect a portion of the interest earned from blend pools by the vault depositors along with all emissions accrued by vault depositors. Wallets and integrating protocols are the entities typically interested in this functionality.
 
-- See the [Formal Verification Readme]() for FV details.  [C4 TODO]
+- See the [Formal Verification repo `README`](https://github.com/code-423n4/2025-02-blend-fv) for details about the Formal Verification portion of the competition.
 
 ## Links
 
