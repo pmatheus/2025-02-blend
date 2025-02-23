@@ -35,8 +35,6 @@ All other code in scope is _not_ deployed. Vulnerabilities with a root cause in 
 
 ## Automated Findings / Publicly Known Issues
 
-The 4naly3er report can be found [here](https://github.com/code-423n4/2025-02-blend/blob/main/4naly3er-report.md).
-
 _Note for C4 wardens: Anything included in this `Automated Findings / Publicly Known Issues` section is considered a publicly known issue and is ineligible for awards._
 
 Any issues that have already been uncovered here at the start of the contest are considered out-of-scope: https://github.com/blend-capital/blend-contracts-v2/issues
