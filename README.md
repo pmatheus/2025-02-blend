@@ -186,7 +186,7 @@ Any file that is not explicitly included in the aforementioned list is to be con
 
 | Question                                                  | Answer |
 | --------------------------------------------------------- | ------ |
-| Enabling/disabling fees (e.g. Blur disables/enables fees) | Yes   |
+| Enabling/disabling fees (e.g. Blur disables/enables fees) | No   |
 | Pausability (e.g. Uniswap pool gets paused)               |  Yes   |
 | Upgradeability (e.g. Uniswap gets upgraded)               |   No  |
 
