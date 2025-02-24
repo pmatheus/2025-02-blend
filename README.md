@@ -251,6 +251,6 @@ make test
 
 ## Miscellaneous
 
-Employees of Blend and employees' family members are ineligible to participate in this audit.
+Employees of Blend or Certora, and employees' family members, are ineligible to participate in this audit.
 
 Code4rena's rules cannot be overridden by the contents of this README. In case of doubt, please check with C4 staff.
